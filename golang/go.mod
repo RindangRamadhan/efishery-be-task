@@ -1,4 +1,4 @@
-module github.com/RindangRamadhan/efishery-be-task
+module github.com/rindangramadhan/efishery-be-task
 
 go 1.16
 

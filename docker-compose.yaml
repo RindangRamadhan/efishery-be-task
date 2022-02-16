@@ -1,0 +1,29 @@
+version: '3.8'
+
+# Docker Services
+services:
+    
+  efishery-golang:
+    restart: unless-stopped
+    container_name: efishery-golang
+    build:
+      context: ./golang
+      dockerfile: build/dev/Dockerfile
+    volumes:
+      - ./golang:/go/src/github.com/rindangramadhan/efishery-be-task:delegated
+      - efishery_go-modules:/go/pkg/mod:cached
+    environment:
+      - "GO_ENV=development"
+    ports:
+      - 8899:7788
+
+# Docker Networks
+networks:
+  default:
+    external: true
+    name: efishery-network
+
+# Docker Volumes
+volumes:
+  efishery_go-modules:
+    external: true
