@@ -13,25 +13,21 @@ services:
       - ./golang:/go/src/github.com/rindangramadhan/efishery-golang:delegated
       - ./database:/go/src/github.com/rindangramadhan/database
       - efishery_go-modules:/go/pkg/mod:cached
-    environment:
-      - "GO_ENV=development"
     ports:
       - 9091:9090
     
-  # efishery-nodejs:
-  #   restart: unless-stopped
-  #   container_name: efishery-nodejs
-  #   build:
-  #     context: ./nodejs
-  #     dockerfile: build/dev/Dockerfile
-  #   volumes:
-  #     - ./nodejs:/go/src/github.com/rindangramadhan/efishery-nodejs:delegated
-  #     - ./database:/go/src/github.com/rindangramadhan/database
-  #     - efishery_go-modules:/go/pkg/mod:cached
-  #   environment:
-  #     - "GO_ENV=development"
-  #   ports:
-  #     - 7071:7070
+  efishery-nodejs:
+    restart: unless-stopped
+    container_name: efishery-nodejs
+    build:
+      context: ./nodejs
+      dockerfile: build/dev/Dockerfile
+    volumes:
+      - ./nodejs:/go/src/github.com/rindangramadhan/efishery-nodejs:delegated
+      - ./database:/go/src/github.com/rindangramadhan/database
+      - efishery_go-modules:/go/pkg/mod:cached
+    ports:
+      - 7071:7070
 
 # Docker Networks
 networks:
