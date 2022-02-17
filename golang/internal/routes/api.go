@@ -3,6 +3,7 @@ package routes
 import (
 	"github.com/labstack/echo/v4"
 	"github.com/rindangramadhan/efishery-be-task/internal/helper"
+	"github.com/rindangramadhan/efishery-be-task/internal/middleware"
 	"github.com/rindangramadhan/efishery-be-task/internal/modules/health"
 	"github.com/rindangramadhan/efishery-be-task/internal/modules/users"
 )
@@ -24,6 +25,8 @@ func RouteApply(e *echo.Echo) {
 	}
 
 	api := e.Group("api")
+	api.Use(echo.WrapMiddleware(middleware.JWT))
+
 	for _, router := range routers {
 
 		switch router.Method {
