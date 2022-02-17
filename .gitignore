@@ -1,3 +1,5 @@
 golang/vendor
 golang/.env
 golang/efishery-golang
+nodejs/node_modules
+nodejs/.env
