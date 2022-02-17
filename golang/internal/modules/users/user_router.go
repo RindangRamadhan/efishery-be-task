@@ -25,5 +25,10 @@ func (r *route) Routes() []helper.Route {
 			Pattern:     "/users/register",
 			HandlerFunc: r.c.Register,
 		},
+		{
+			Method:      "POST",
+			Pattern:     "/users/login",
+			HandlerFunc: r.c.Login,
+		},
 	}
 }

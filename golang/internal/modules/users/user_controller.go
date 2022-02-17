@@ -12,6 +12,7 @@ import (
 
 type Controller interface {
 	Register(ctx echo.Context) (err error)
+	Login(ctx echo.Context) (err error)
 }
 
 type controller struct {
@@ -49,6 +50,34 @@ func (c *controller) Register(ctx echo.Context) (err error) {
 			}
 
 			return response.WriteError(ctx, http.StatusConflict, http.StatusText(http.StatusConflict), stackEntries)
+		} else {
+			return response.WriteError(ctx, http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError), err)
+		}
+	}
+
+	return response.WriteSuccess(ctx, "Successfully Register", resp)
+}
+
+func (c *controller) Login(ctx echo.Context) (err error) {
+	// Bind & Validation Request
+	req := new(upkg.LoginRequest)
+	if err := ctx.Bind(req); err != nil {
+		return response.WriteError(ctx, http.StatusBadRequest, http.StatusText(http.StatusBadRequest), err)
+	}
+
+	if err := ctx.Validate(req); err != nil {
+		return response.WriteError(ctx, http.StatusBadRequest, http.StatusText(http.StatusBadRequest), err)
+	}
+
+	resp, err := c.m.Login(ctx, req)
+
+	if err != nil {
+		if strings.Contains(err.Error(), "sql: no rows in result set") {
+			stackEntries := map[string]interface{}{
+				"message": "Credentials not found",
+			}
+
+			return response.WriteError(ctx, http.StatusUnauthorized, http.StatusText(http.StatusUnauthorized), stackEntries)
 		} else {
 			return response.WriteError(ctx, http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError), err)
 		}

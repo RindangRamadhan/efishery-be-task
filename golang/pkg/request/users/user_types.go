@@ -14,4 +14,17 @@ type (
 		Password string `json:"password"`
 		Role     string `json:"role"`
 	}
+
+	LoginRequest struct {
+		Name     string `json:"name" validate:"required"`
+		Password string `json:"password"`
+	}
+
+	LoginResponse struct {
+		Name      string `json:"name"`
+		Phone     string `json:"phone"`
+		Password  string `json:"password"`
+		Role      string `json:"role"`
+		CreatedAt string `json:"created_at"`
+	}
 )
