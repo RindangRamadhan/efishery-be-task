@@ -2,13 +2,16 @@ package main
 
 import (
 	"log"
-	"net/http"
 	"os"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
+	"github.com/rindangramadhan/efishery-be-task/internal/helper"
+	"github.com/rindangramadhan/efishery-be-task/internal/routes"
 
-	db "github.com/rindangramadhan/efishery-be-task/internal/helper/db/sqlite"
+	db "github.com/rindangramadhan/efishery-be-task/internal/db/sqlite"
 )
 
 func main() {
@@ -18,20 +21,37 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	server := echo.New()
+	api := echo.New()
 
+	// Custom Binder
+	api.Binder = &helper.CustomBinder{}
+
+	// Custom Validator
+	api.Validator = &helper.CustomValidator{Validator: validator.New()}
+
+	api.Use(middleware.Logger())
+	api.Use(middleware.Recover())
+
+	// Cors Middleware for API endpoint.
+	api.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+		AllowMethods: []string{echo.GET, echo.HEAD, echo.POST},
+	}))
+
+	// Database
 	db.SQLite.Init()
 
-	server.GET("/", func(c echo.Context) error {
-		var response = struct {
-			Status  string `json:"status"`
-			Message string `json:"message"`
-		}{
-			Status:  "ok",
-			Message: "Hello eFishery!",
-		}
+	// Route
+	routes.RouteApply(api)
 
-		return c.JSON(http.StatusOK, response)
+	server := echo.New()
+	server.Any("/*", func(c echo.Context) (err error) {
+		req := c.Request()
+		res := c.Response()
+
+		api.ServeHTTP(res, req)
+
+		return
 	})
 
 	server.Logger.Fatal(server.Start(":" + os.Getenv("SERVICE_PORT")))
