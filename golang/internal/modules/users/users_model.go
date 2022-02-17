@@ -31,8 +31,8 @@ func (m *model) Register(c echo.Context, req *upkg.RegisterRequest) (res *upkg.R
 
 	stmt, err := db.SQLite.Conn.Prepare(`
 		INSERT INTO "main"."users" (
-			"name", "phone", "password", "role", "created_at"
-		) VALUES (?,?,?,?,?);
+			"username", "name", "phone", "password", "role", "created_at"
+		) VALUES (?,?,?,?,?,?);
 	`)
 
 	if err != nil {
@@ -42,7 +42,7 @@ func (m *model) Register(c echo.Context, req *upkg.RegisterRequest) (res *upkg.R
 
 	defer stmt.Close()
 
-	_, err = stmt.Exec(req.Name, req.Phone, reqPassword, req.Role, currTime)
+	_, err = stmt.Exec(req.Username, req.Name, req.Phone, reqPassword, req.Role, currTime)
 	if err != nil {
 		c.Logger().Errorf("Error executed query insert users :", err.Error())
 		return nil, err
@@ -50,6 +50,7 @@ func (m *model) Register(c echo.Context, req *upkg.RegisterRequest) (res *upkg.R
 	defer stmt.Close()
 
 	return &upkg.RegisterResponse{
+		Username: req.Username,
 		Name:     req.Name,
 		Phone:    req.Phone,
 		Password: reqPassword,
@@ -59,14 +60,14 @@ func (m *model) Register(c echo.Context, req *upkg.RegisterRequest) (res *upkg.R
 
 func (m *model) Login(c echo.Context, req *upkg.LoginRequest) (res *upkg.LoginResponse, err error) {
 	var row struct {
-		Phone     string `json:"phone"`
+		Name      string `json:"name"`
 		Role      string `json:"role"`
 		CreatedAt string `json:"created_at"`
 	}
 
 	stmt, err := db.SQLite.Conn.Prepare(`
-		SELECT phone, role, created_at FROM "main"."users" 
-			WHERE name = ? AND password = ? 
+		SELECT name, role, created_at FROM "main"."users" 
+			WHERE phone = ? AND password = ? 
 	`)
 
 	if err != nil {
@@ -76,7 +77,7 @@ func (m *model) Login(c echo.Context, req *upkg.LoginRequest) (res *upkg.LoginRe
 
 	defer stmt.Close()
 
-	err = stmt.QueryRow(req.Name, req.Password).Scan(&row.Phone, &row.Role, &row.CreatedAt)
+	err = stmt.QueryRow(req.Phone, req.Password).Scan(&row.Name, &row.Role, &row.CreatedAt)
 	if err != nil {
 		c.Logger().Errorf("Error executed query select users :", err.Error())
 		return nil, err
@@ -84,8 +85,8 @@ func (m *model) Login(c echo.Context, req *upkg.LoginRequest) (res *upkg.LoginRe
 	defer stmt.Close()
 
 	return &upkg.LoginResponse{
-		Name:      req.Name,
-		Phone:     row.Phone,
+		Name:      row.Name,
+		Phone:     req.Phone,
 		Role:      row.Role,
 		CreatedAt: row.CreatedAt,
 	}, nil

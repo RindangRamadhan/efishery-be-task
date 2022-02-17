@@ -26,7 +26,7 @@ func (_d *dbSQLite) Connect() (*sql.DB, error) {
 
 	// Check Path File
 	if _, err := os.Stat(dbFilePath); os.IsNotExist(err) {
-		fmt.Println("Create new database" + dbName)
+		fmt.Println("Create new database " + dbName)
 
 		file, err := os.Create(dbFilePath) // Create SQLite file
 		if err != nil {
@@ -56,7 +56,8 @@ func (_d *dbSQLite) createTables(db *sql.DB) {
 	query := `
 		CREATE TABLE IF NOT EXISTS "users" (
 			"id"	INTEGER,
-			"name"	TEXT NOT NULL UNIQUE,
+			"username"	TEXT NOT NULL UNIQUE,
+			"name"	TEXT NOT NULL,
 			"phone"	TEXT NOT NULL,
 			"password"	TEXT NOT NULL UNIQUE,
 			"role"	TEXT NOT NULL,

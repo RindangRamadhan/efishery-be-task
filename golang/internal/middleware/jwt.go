@@ -15,8 +15,8 @@ import (
 
 var unlessPath = []string{
 	"/api/health/status",
-	"/api/users/register",
-	"/api/users/login",
+	"/api/auth/register",
+	"/api/auth/login",
 }
 
 var unlessPrefix = []string{}

@@ -22,17 +22,17 @@ func (r *route) Routes() []helper.Route {
 	return []helper.Route{
 		{
 			Method:      "POST",
-			Pattern:     "/users/register",
+			Pattern:     "/auth/register",
 			HandlerFunc: r.c.Register,
 		},
 		{
 			Method:      "POST",
-			Pattern:     "/users/login",
+			Pattern:     "/auth/login",
 			HandlerFunc: r.c.Login,
 		},
 		{
 			Method:      "GET",
-			Pattern:     "/users/login-check",
+			Pattern:     "/auth/login-check",
 			HandlerFunc: r.c.LoginCheck,
 		},
 	}
