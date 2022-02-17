@@ -23,9 +23,9 @@ services:
       context: ./nodejs
       dockerfile: build/dev/Dockerfile
     volumes:
-      - ./nodejs:/go/src/github.com/rindangramadhan/efishery-nodejs:delegated
-      - ./database:/go/src/github.com/rindangramadhan/database
-      - efishery_go-modules:/go/pkg/mod:cached
+      - /app/node_modules
+      - ./nodejs:/app
+      - ./database:/app/database
     ports:
       - 7071:7070
 

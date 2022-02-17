@@ -1,10 +1,10 @@
 FROM node:fermium-alpine3.10
 
+WORKDIR /app
+
 COPY package*.json ./
 
-WORKDIR /
-
-RUN npm install
+RUN yes | npm install
 
 COPY . .
 
