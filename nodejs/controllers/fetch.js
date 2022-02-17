@@ -3,7 +3,7 @@ const moment = require('moment');
 const ss = require('simple-statistics')
 
 module.exports = {
-  fetchRoleBiasa: async function (req, res, next) {
+  fetchRoleBebas: async function (req, res, next) {
     const db = DB();
     const resource = await repoResource();
     let cursIDR_USD = null;
