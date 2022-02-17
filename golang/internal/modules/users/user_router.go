@@ -30,5 +30,10 @@ func (r *route) Routes() []helper.Route {
 			Pattern:     "/users/login",
 			HandlerFunc: r.c.Login,
 		},
+		{
+			Method:      "GET",
+			Pattern:     "/users/login-check",
+			HandlerFunc: r.c.LoginCheck,
+		},
 	}
 }
