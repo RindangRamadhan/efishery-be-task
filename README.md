@@ -38,8 +38,10 @@ Start the server
 
 ## Documentation
 
-1. [Auth App (Swagger)](https://documenter.getpostman.com/view/3419442/UVeMKQFS)
-2. [Fetch App (Swagger)](https://documenter.getpostman.com/view/3419442/UVeMKQFS)
+
+1. [Markdown Documentation](https://github.com/RindangRamadhan/efishery-be-task/blob/master/API.md)
+<!-- 1. [Auth App (Swagger)](https://documenter.getpostman.com/view/3419442/UVeMKQFS)
+2. [Fetch App (Swagger)](https://documenter.getpostman.com/view/3419442/UVeMKQFS) -->
 
 ## Context & Deployment
 
