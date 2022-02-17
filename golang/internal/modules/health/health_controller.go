@@ -18,11 +18,12 @@ func NewController() Controller {
 }
 
 // Status godoc
-// @Description  To check health service
 // @Tags         Health
+// @Description  To check health service
 // @Accept       json
 // @Produce      json
-// @Success      200  {object}  response.BodyTpl{status=string,message=string}
+// @Success      200  {object}  response.BodyTpl{status=string,message=string,values=response.Object}
+// @Failure      500  {object}  response.BodyTpl{status=string,message=string,errors=response.Object}
 // @Router       /health/status [get]
 func (*controller) Status(ctx echo.Context) error {
 	type Response struct {
