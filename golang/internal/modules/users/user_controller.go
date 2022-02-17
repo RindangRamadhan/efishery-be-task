@@ -5,6 +5,7 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
+	"github.com/rindangramadhan/efishery-be-task/internal/helper"
 	"github.com/rindangramadhan/efishery-be-task/pkg/response"
 
 	upkg "github.com/rindangramadhan/efishery-be-task/pkg/request/users"
@@ -81,6 +82,17 @@ func (c *controller) Login(ctx echo.Context) (err error) {
 		} else {
 			return response.WriteError(ctx, http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError), err)
 		}
+	}
+
+	// Generate Token
+	resp.Token, err = helper.GenerateToken(helper.TokenRequest{
+		Name:      resp.Name,
+		Phone:     resp.Phone,
+		Role:      resp.Role,
+		CreatedAt: resp.CreatedAt,
+	})
+	if err != nil {
+		return response.WriteError(ctx, http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError), err)
 	}
 
 	return response.WriteSuccess(ctx, "Successfully Register", resp)

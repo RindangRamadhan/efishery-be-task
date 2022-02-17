@@ -43,7 +43,7 @@ func (_d *dbSQLite) Connect() (*sql.DB, error) {
 		log.Fatal(err)
 	}
 
-	defer SQLiteDB.Close() // Defer Closing the database
+	// defer SQLiteDB.Close() // Defer Closing the database
 
 	// Creating Tables
 	_d.createTables(SQLiteDB)
@@ -60,6 +60,7 @@ func (_d *dbSQLite) createTables(db *sql.DB) {
 			"phone"	TEXT NOT NULL,
 			"password"	TEXT NOT NULL UNIQUE,
 			"role"	TEXT NOT NULL,
+			"created_at" Timestamp With Time Zone NOT NULL,
 			PRIMARY KEY("id" AUTOINCREMENT)
 		);
 	`

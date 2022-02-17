@@ -86,7 +86,6 @@ func (m *model) Login(c echo.Context, req *upkg.LoginRequest) (res *upkg.LoginRe
 	return &upkg.LoginResponse{
 		Name:      req.Name,
 		Phone:     row.Phone,
-		Password:  req.Password,
 		Role:      row.Role,
 		CreatedAt: row.CreatedAt,
 	}, nil
