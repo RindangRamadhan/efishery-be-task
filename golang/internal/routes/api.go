@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/rindangramadhan/efishery-be-task/internal/helper"
 	"github.com/rindangramadhan/efishery-be-task/internal/modules/health"
+	"github.com/rindangramadhan/efishery-be-task/internal/modules/users"
 )
 
 type ApiRoute interface {
@@ -15,6 +16,7 @@ func RouteApply(e *echo.Echo) {
 
 	apiRoute := []ApiRoute{
 		health.NewRoute(),
+		users.NewRoute(),
 	}
 
 	for _, ar := range apiRoute {
