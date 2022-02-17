@@ -1,10 +1,10 @@
 FROM golang:1.16-alpine
 
-ENV SERVICE_NAME efishery-be-task
+ENV SERVICE_NAME efishery-golang
 ENV REPOSITORY github.com/rindangramadhan
 ENV GOPRIVATE github.com/rindangramadhan/*
 
-RUN apk add --no-cache sudo
+RUN apk add --no-cache sudo build-base
 
 COPY build/assets/sudoers /etc/sudoers
 
