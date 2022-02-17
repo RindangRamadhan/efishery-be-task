@@ -8,6 +8,30 @@ definitions:
         type: string
       values: {}
     type: object
+  response.Object:
+    type: object
+  users.LoginRequest:
+    properties:
+      name:
+        type: string
+      password:
+        type: string
+    required:
+    - name
+    type: object
+  users.RegisterRequest:
+    properties:
+      name:
+        type: string
+      phone:
+        type: string
+      role:
+        type: string
+    required:
+    - name
+    - phone
+    - role
+    type: object
 info:
   contact: {}
 paths:
@@ -29,7 +53,153 @@ paths:
                   type: string
                 status:
                   type: string
+                values:
+                  $ref: '#/definitions/response.Object'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                errors:
+                  $ref: '#/definitions/response.Object'
+                message:
+                  type: string
+                status:
+                  type: string
               type: object
       tags:
       - Health
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: To login user
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/users.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                message:
+                  type: string
+                status:
+                  type: string
+                values:
+                  $ref: '#/definitions/response.Object'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                errors:
+                  $ref: '#/definitions/response.Object'
+                message:
+                  type: string
+                status:
+                  type: string
+              type: object
+      tags:
+      - Login
+  /users/login-check:
+    get:
+      consumes:
+      - application/json
+      description: To check login user
+      parameters:
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                message:
+                  type: string
+                status:
+                  type: string
+                values:
+                  $ref: '#/definitions/response.Object'
+              type: object
+        "401":
+          description: Unauthorized
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                errors:
+                  $ref: '#/definitions/response.Object'
+                message:
+                  type: string
+                status:
+                  type: string
+              type: object
+      security:
+      - ApiKeyAuth: []
+      tags:
+      - Login Check
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: To create a new user
+      parameters:
+      - description: payload
+        in: body
+        name: payload
+        required: true
+        schema:
+          $ref: '#/definitions/users.RegisterRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                message:
+                  type: string
+                status:
+                  type: string
+                values:
+                  $ref: '#/definitions/response.Object'
+              type: object
+        "400":
+          description: Bad Request
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                errors:
+                  $ref: '#/definitions/response.Object'
+                message:
+                  type: string
+                status:
+                  type: string
+              type: object
+      tags:
+      - Register
 swagger: "2.0"

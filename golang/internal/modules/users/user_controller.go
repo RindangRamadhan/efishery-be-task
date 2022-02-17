@@ -31,6 +31,15 @@ func NewController() Controller {
 	}
 }
 
+// Register godoc
+// @Tags         Register
+// @Description  To create a new user
+// @Accept       json
+// @Produce      json
+// @Param        payload  body      users.RegisterRequest  true  "payload"
+// @Success      200      {object}  response.BodyTpl{status=string,message=string,values=response.Object}
+// @Failure      400      {object}  response.BodyTpl{status=string,message=string,errors=response.Object}
+// @Router       /users/register [post]
 func (c *controller) Register(ctx echo.Context) (err error) {
 	// Bind & Validation Request
 	req := new(upkg.RegisterRequest)
@@ -64,6 +73,15 @@ func (c *controller) Register(ctx echo.Context) (err error) {
 	return response.WriteSuccess(ctx, "Successfully Register", resp)
 }
 
+// Login godoc
+// @Tags         Login
+// @Description  To login user
+// @Accept       json
+// @Produce      json
+// @Param        payload  body      users.LoginRequest  true  "payload"
+// @Success      200      {object}  response.BodyTpl{status=string,message=string,values=response.Object}
+// @Failure      400      {object}  response.BodyTpl{status=string,message=string,errors=response.Object}
+// @Router       /users/login [post]
 func (c *controller) Login(ctx echo.Context) (err error) {
 	// Bind & Validation Request
 	req := new(upkg.LoginRequest)
@@ -103,6 +121,16 @@ func (c *controller) Login(ctx echo.Context) (err error) {
 	return response.WriteSuccess(ctx, "Successfully Login", resp)
 }
 
+// LoginCheck godoc
+// @Tags         Login Check
+// @Description  To check login user
+// @Accept       json
+// @Produce      json
+// @Security     ApiKeyAuth
+// @Param        Authorization  header    string  true  "Insert your access token"  default(Bearer <Add access token here>)
+// @Success      200            {object}  response.BodyTpl{status=string,message=string,values=response.Object}
+// @Failure      401            {object}  response.BodyTpl{status=string,message=string,errors=response.Object}
+// @Router       /users/login-check [get]
 func (c *controller) LoginCheck(ctx echo.Context) (err error) {
 	authHeader := ctx.Request().Header.Get("Authorization")
 	session := strings.Replace(authHeader, "Bearer ", "", -1)

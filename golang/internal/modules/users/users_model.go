@@ -27,7 +27,7 @@ func (m *model) Register(c echo.Context, req *upkg.RegisterRequest) (res *upkg.R
 	var currTime = time.Now().In(location).Format("2006-01-02T15:04:05-0700")
 
 	// Generate Random String for Password
-	req.Password = helper.RandStringBytes(4)
+	reqPassword := helper.RandStringBytes(4)
 
 	stmt, err := db.SQLite.Conn.Prepare(`
 		INSERT INTO "main"."users" (
@@ -42,7 +42,7 @@ func (m *model) Register(c echo.Context, req *upkg.RegisterRequest) (res *upkg.R
 
 	defer stmt.Close()
 
-	_, err = stmt.Exec(req.Name, req.Phone, req.Password, req.Role, currTime)
+	_, err = stmt.Exec(req.Name, req.Phone, reqPassword, req.Role, currTime)
 	if err != nil {
 		c.Logger().Errorf("Error executed query insert users :", err.Error())
 		return nil, err
@@ -52,7 +52,7 @@ func (m *model) Register(c echo.Context, req *upkg.RegisterRequest) (res *upkg.R
 	return &upkg.RegisterResponse{
 		Name:     req.Name,
 		Phone:    req.Phone,
-		Password: req.Password,
+		Password: reqPassword,
 		Role:     req.Role,
 	}, nil
 }

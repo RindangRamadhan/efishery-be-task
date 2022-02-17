@@ -20,6 +20,8 @@ type (
 		Message interface{} `json:"message"`
 		Value   interface{} `json:"value"`
 	}
+
+	Object struct{}
 )
 
 func WriteSuccess(ctx echo.Context, message string, data interface{}) error {
