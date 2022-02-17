@@ -21,11 +21,12 @@ func (_d *dbSQLite) Init() {
 
 func (_d *dbSQLite) Connect() (*sql.DB, error) {
 	cwd, _ := os.Getwd()
-	dbFilePath := path.Dir(cwd) + "/database/db_efishery.db"
+	dbName := os.Getenv("SQLITE_DBNAME")
+	dbFilePath := path.Dir(cwd) + "/database/" + dbName
 
 	// Check Path File
 	if _, err := os.Stat(dbFilePath); os.IsNotExist(err) {
-		fmt.Println("Create new database" + "db_efishery.db")
+		fmt.Println("Create new database" + dbName)
 
 		file, err := os.Create(dbFilePath) // Create SQLite file
 		if err != nil {
@@ -34,7 +35,7 @@ func (_d *dbSQLite) Connect() (*sql.DB, error) {
 
 		file.Close()
 
-		fmt.Println("Database db_efishery.db created")
+		fmt.Println("Database " + dbName + " created")
 	}
 
 	SQLiteDB, err := sql.Open("sqlite3", dbFilePath)
