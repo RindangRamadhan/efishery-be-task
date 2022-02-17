@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 module.exports = {
   DB: function () {
-    const db = new sqlite3.Database('nodejs.db');
+    const db = new sqlite3.Database('./database/db_efishery.db');
 
     return db;
   },
