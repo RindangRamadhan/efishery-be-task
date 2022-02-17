@@ -43,6 +43,7 @@ func main() {
 
 	// Route
 	routes.RouteApply(api)
+	routes.Swagger.Init(api)
 
 	server := echo.New()
 	server.Any("/*", func(c echo.Context) (err error) {

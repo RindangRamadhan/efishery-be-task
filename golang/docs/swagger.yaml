@@ -1,0 +1,35 @@
+definitions:
+  response.BodyTpl:
+    properties:
+      errors: {}
+      message:
+        type: string
+      status:
+        type: string
+      values: {}
+    type: object
+info:
+  contact: {}
+paths:
+  /health/status:
+    get:
+      consumes:
+      - application/json
+      description: To check health service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                message:
+                  type: string
+                status:
+                  type: string
+              type: object
+      tags:
+      - Health
+swagger: "2.0"
