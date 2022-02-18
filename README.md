@@ -28,16 +28,17 @@ Start the server
   docker-compose up -d
 ```
 
-Base URL
+Running On
 
 - Auth App : http://localhost:9091
 - Fetch App : http://localhost:7071
+
 
 ## Documentation
 
 1. [Markdown Documentation](https://github.com/RindangRamadhan/efishery-be-task/blob/master/API.md)
 2. [Postman Documentation)](https://documenter.getpostman.com/view/7610701/UVkiTJpj)
-3. [Auth App (Swagger)](http://localhost:9091/swagger/index.html)
+3. [Auth App (Swagger)](https://efishery-be-task.infomediaku.com/swagger/index.html)
 
 ## Context & Deployment
 
@@ -64,7 +65,7 @@ Base URL
 
 ## Additional Goals
 
-- [ ]  Deployed ke Host/Penyedia Layanan (semacam surge, heroku, vercel, firebase, glitch,
+- [x]  Deployed ke Host/Penyedia Layanan (semacam surge, heroku, vercel, firebase, glitch,
 host anda pribadi)
 - [x]  Docker Compose
 - [ ]  Unit Testing

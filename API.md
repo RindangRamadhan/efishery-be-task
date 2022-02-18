@@ -5,7 +5,7 @@
 ## End-point: Register
 ### Method: POST
 >```
->http://localhost:9091/api/auth/register
+>https://efisheryapi.infomediaku.com/api/auth/register
 >```
 ### Body (**raw**)
 
@@ -24,7 +24,7 @@
 ## End-point: Login
 ### Method: POST
 >```
->http://localhost:9091/api/auth/login
+>https://efisheryapi.infomediaku.com/api/auth/login
 >```
 ### Body (**raw**)
 
@@ -41,7 +41,7 @@
 ## End-point: Login Check
 ### Method: GET
 >```
->http://localhost:9091/api/auth/login-check
+>https://efisheryapi.infomediaku.com/api/auth/login-check
 >```
 ### 🔑 Authentication bearer
 
@@ -58,7 +58,7 @@
 ## End-point: Claims Token
 ### Method: GET
 >```
->http://localhost:7071/fetch/claims
+>https://efisheryapi1.infomediaku.com/fetch/claims
 >```
 ### 🔑 Authentication bearer
 
@@ -73,7 +73,7 @@
 ## End-point: Get Resource (Role Bebas)
 ### Method: GET
 >```
->http://localhost:7071/fetch/resource-bebas
+>https://efisheryapi1.infomediaku.com/fetch/resource-bebas
 >```
 ### 🔑 Authentication bearer
 
@@ -88,7 +88,7 @@
 ## End-point: Get Resource (Role Admin)
 ### Method: GET
 >```
->http://localhost:7071/fetch/resource-admin
+>https://efisheryapi1.infomediaku.com/fetch/resource-admin
 >```
 ### 🔑 Authentication bearer
 

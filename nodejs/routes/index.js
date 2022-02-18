@@ -6,7 +6,17 @@ const { authenticateToken } = require('../middleware');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.json({
+    "status": "ok",
+    "message": "Hello eFishery",
+  });
+});
+
+router.get('/fetch', function(req, res, next) {
+  res.json({
+    "status": "ok",
+    "message": "Hello eFishery",
+  });
 });
 
 router.get('/fetch/resource-bebas', authenticateToken, fetchRoleBebas);
