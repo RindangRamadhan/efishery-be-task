@@ -12,12 +12,13 @@ definitions:
     type: object
   users.LoginRequest:
     properties:
-      name:
-        type: string
       password:
         type: string
+      phone:
+        type: string
     required:
-    - name
+    - password
+    - phone
     type: object
   users.RegisterRequest:
     properties:
@@ -27,51 +28,18 @@ definitions:
         type: string
       role:
         type: string
+      username:
+        type: string
     required:
     - name
     - phone
     - role
+    - username
     type: object
 info:
   contact: {}
 paths:
-  /health/status:
-    get:
-      consumes:
-      - application/json
-      description: To check health service
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.BodyTpl'
-            - properties:
-                message:
-                  type: string
-                status:
-                  type: string
-                values:
-                  $ref: '#/definitions/response.Object'
-              type: object
-        "500":
-          description: Internal Server Error
-          schema:
-            allOf:
-            - $ref: '#/definitions/response.BodyTpl'
-            - properties:
-                errors:
-                  $ref: '#/definitions/response.Object'
-                message:
-                  type: string
-                status:
-                  type: string
-              type: object
-      tags:
-      - Health
-  /users/login:
+  /auth/login:
     post:
       consumes:
       - application/json
@@ -114,7 +82,7 @@ paths:
               type: object
       tags:
       - Login
-  /users/login-check:
+  /auth/login-check:
     get:
       consumes:
       - application/json
@@ -159,7 +127,7 @@ paths:
       - ApiKeyAuth: []
       tags:
       - Login Check
-  /users/register:
+  /auth/register:
     post:
       consumes:
       - application/json
@@ -202,4 +170,40 @@ paths:
               type: object
       tags:
       - Register
+  /health/status:
+    get:
+      consumes:
+      - application/json
+      description: To check health service
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                message:
+                  type: string
+                status:
+                  type: string
+                values:
+                  $ref: '#/definitions/response.Object'
+              type: object
+        "500":
+          description: Internal Server Error
+          schema:
+            allOf:
+            - $ref: '#/definitions/response.BodyTpl'
+            - properties:
+                errors:
+                  $ref: '#/definitions/response.Object'
+                message:
+                  type: string
+                status:
+                  type: string
+              type: object
+      tags:
+      - Health
 swagger: "2.0"

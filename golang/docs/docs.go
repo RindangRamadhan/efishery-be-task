@@ -16,71 +16,7 @@ const docTemplate_swagger = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/health/status": {
-            "get": {
-                "description": "To check health service",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Health"
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/response.BodyTpl"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "status": {
-                                            "type": "string"
-                                        },
-                                        "values": {
-                                            "$ref": "#/definitions/response.Object"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
-                        "schema": {
-                            "allOf": [
-                                {
-                                    "$ref": "#/definitions/response.BodyTpl"
-                                },
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "errors": {
-                                            "$ref": "#/definitions/response.Object"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "status": {
-                                            "type": "string"
-                                        }
-                                    }
-                                }
-                            ]
-                        }
-                    }
-                }
-            }
-        },
-        "/users/login": {
+        "/auth/login": {
             "post": {
                 "description": "To login user",
                 "consumes": [
@@ -155,7 +91,7 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "/users/login-check": {
+        "/auth/login-check": {
             "get": {
                 "security": [
                     {
@@ -234,7 +170,7 @@ const docTemplate_swagger = `{
                 }
             }
         },
-        "/users/register": {
+        "/auth/register": {
             "post": {
                 "description": "To create a new user",
                 "consumes": [
@@ -308,6 +244,70 @@ const docTemplate_swagger = `{
                     }
                 }
             }
+        },
+        "/health/status": {
+            "get": {
+                "description": "To check health service",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Health"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.BodyTpl"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        },
+                                        "values": {
+                                            "$ref": "#/definitions/response.Object"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/response.BodyTpl"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "errors": {
+                                            "$ref": "#/definitions/response.Object"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "status": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -330,13 +330,14 @@ const docTemplate_swagger = `{
         "users.LoginRequest": {
             "type": "object",
             "required": [
-                "name"
+                "password",
+                "phone"
             ],
             "properties": {
-                "name": {
+                "password": {
                     "type": "string"
                 },
-                "password": {
+                "phone": {
                     "type": "string"
                 }
             }
@@ -346,7 +347,8 @@ const docTemplate_swagger = `{
             "required": [
                 "name",
                 "phone",
-                "role"
+                "role",
+                "username"
             ],
             "properties": {
                 "name": {
@@ -356,6 +358,9 @@ const docTemplate_swagger = `{
                     "type": "string"
                 },
                 "role": {
+                    "type": "string"
+                },
+                "username": {
                     "type": "string"
                 }
             }
